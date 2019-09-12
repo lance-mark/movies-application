@@ -27,7 +27,11 @@ getMovies().then((movies) => {
 
   $('#loader').css('display', 'none');
 
-    let movieList = '';
+  console.log(movies);
+  console.log(movies.length);
+  let idCount = movies.length;
+
+  let movieList = '';
 
       movies.forEach(({title, rating}) => {
         movieList += `<div> - ${title} - rating: ${rating}</div>`;
@@ -39,4 +43,23 @@ getMovies().then((movies) => {
 }).catch((error) => {
   alert('Oh no! Something went wrong.\nCheck the console for details.')
   console.log(error);
+});
+
+function addNewMovie() {
+
+}
+
+const newMovieEntry = {title: 'test', rating: '5'};
+const url = '/api/movies';
+const options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(newMovieEntry),
+};
+fetch(url, options)
+    .then(getMovies())
+    .catch((error) => {
+  alert('Oh no! Something went wrong.\nCheck the console for details.');
 });
