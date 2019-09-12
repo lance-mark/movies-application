@@ -34,7 +34,7 @@ function loadMovies(){
     let movieList = '';
 
     movies.forEach(({title, rating, id}) => {
-      movieList += `<div> - ${title} - rating: ${rating}<button class="${id}">delete</button></div>`;
+      movieList += `<div> - ${title} - rating: ${rating}<button id="${id}">delete</button></div>`;
 
     });
 
@@ -44,7 +44,7 @@ function loadMovies(){
 
 
     $('button').click(function() {
-      delete_item($(this).attr("class"));
+      delete_item($(this).attr("id"));
     });
 
 
@@ -87,24 +87,6 @@ function addNewMovie(e) {
 //////////////////////    Delete Movies  /////////////////////////////////////////////////
 
 
-function deleteMovie(id) {
-
-
-
-  const url = `/api/movies/${id}`;
-  const options = {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  fetch(url, options)
-      .then(loadMovies())
-      .catch((error) => {
-        alert('Oh no! Something went wrong.\nCheck the console for details.');
-      });
-}
-
 function delete_item(id) {
 
   $.ajax({
@@ -115,3 +97,30 @@ function delete_item(id) {
     }
   });
 }
+
+//////////////////////////// Edit Movie  ////////////////////////////////////////////////
+
+function editMovie(input) {
+
+  let newTitle = $('#add-new-title').val();
+
+  let newRating = $('.add-new-rating').val();
+
+
+  const newMovieEntry = {title: newTitle, rating: newRating};
+  const url = '/api/movies' + input;
+  const options = {
+    method: 'Put',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newMovieEntry),
+  };
+  fetch(url, options)
+      .then(loadMovies())
+      .catch((error) => {
+        alert('Oh no! Something went wrong.\nCheck the console for details.');
+      });
+}
+
+
