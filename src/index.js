@@ -34,7 +34,7 @@ function loadMovies(){
     let movieList = '';
 
     movies.forEach(({title, rating, id}) => {
-      movieList += `<div class="${id}"> - ${title} - rating: ${rating}<button class="${id}">delete</button></div>`;
+      movieList += `<div> - ${title} - rating: ${rating}<button class="${id}">delete</button></div>`;
 
     });
 
@@ -42,8 +42,9 @@ function loadMovies(){
 
     $('#movieOutput').html(movieList);
 
+
     $('button').click(function() {
-      $(this).parent().css('display', 'none')
+      delete_item($(this).attr("class"));
     });
 
 
@@ -79,13 +80,38 @@ function addNewMovie(e) {
   fetch(url, options)
       .then(loadMovies())
       .catch((error) => {
-    alert('Oh no! Something went wrong.\nCheck the console for details.');
-  });
+        alert('Oh no! Something went wrong.\nCheck the console for details.');
+      });
 }
 
 //////////////////////    Delete Movies  /////////////////////////////////////////////////
 
 
-// $('button').click(function() {
-//   $(this).css('display', 'none')
-// });
+function deleteMovie(id) {
+
+
+
+  const url = `/api/movies/${id}`;
+  const options = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+  fetch(url, options)
+      .then(loadMovies())
+      .catch((error) => {
+        alert('Oh no! Something went wrong.\nCheck the console for details.');
+      });
+}
+
+function delete_item(id) {
+
+  $.ajax({
+    url: '/api/movies/' + id,
+    type: 'DELETE',
+    success: function(data) {
+      loadMovies();
+    }
+  });
+}
