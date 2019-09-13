@@ -34,17 +34,26 @@ function loadMovies(){
     let movieList = '';
 
     movies.forEach(({title, rating, id}) => {
-      movieList += `<div> - ${title} - rating: ${rating}<button id="${id}">delete</button></div>`;
+      movieList += `<div id="${id}"> - ${title} - rating: ${rating}<button class="delete-btn">delete</button>`;
+      movieList += `<span class="hide"><br><input type="text" name="title" id="edit-id${id}"><select name="rating" id="rating${id}"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></span><br><button class="edit-btn">Edit</button><button class="hide save-btn">Save</button></div>`;
 
     });
 
-    console.log(movieList);
+    // console.log(movieList);
 
     $('#movieOutput').html(movieList);
 
+    $('.edit-btn').click(function() {
+      $(this).parent().children('span').toggleClass('hide');
+      $(this).parent().children('button').toggleClass('hide');
+    });
 
-    $('button').click(function() {
-      delete_item($(this).attr("id"));
+    $('.save-btn').click(function () {
+      console.log($(this).parent().attr('id'));
+    });
+
+    $('.delete-btn').click(function() {
+      delete_item($(this).parent().attr("id"));
     });
 
 
