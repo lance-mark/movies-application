@@ -29,7 +29,8 @@ function loadMovies(){
   getMovies().then((movies) => {
     console.log('Here are all the movies:');
     console.log(movies);
-    $('#loader, h1, div').toggleClass('hide');
+    $('#loader').css('display', 'none');
+    $('h1, div').removeClass('hide');
 
 
 
