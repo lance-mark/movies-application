@@ -29,13 +29,15 @@ function loadMovies(){
   getMovies().then((movies) => {
     console.log('Here are all the movies:');
     console.log(movies);
-    $('#loader').css('display', 'none');
+    $('#loader, h1, div').toggleClass('hide');
+
+
 
     let movieList = '';
 
     movies.forEach(({title, rating, id}) => {
-      movieList += `<div id="${id}"> - ${title} - rating: ${rating}<button class="delete-btn">delete</button>`;
-      movieList += `<span class="hide"><br><input type="text" name="title" id="edit-id${id}" value="${title}"><select name="rating" id="rating${id}"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></span><br><button class="edit-btn">Edit</button><button class="hide save-btn">Save</button></div>`;
+      movieList += `<div class="card bg-dark m-2 shadow"><div id="${id}" class="card-title text-center font-weight-bolder"> - ${title} - rating: ${rating}<button class="delete-btn btn-danger text-white float-right">delete</button>`;
+      movieList += `<span class="hide"><br><input type="text" name="title" id="edit-id${id}" value="${title}"><select name="rating" id="rating${id}"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></span><br><button class="edit-btn card-subtitle m-1 bg-info">Edit</button><button class="hide save-btn btn-success">Save</button></div></div>`;
 
     });
 
